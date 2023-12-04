@@ -12,6 +12,10 @@ services:
       - circle-network
     ports:
       - "5444:5432"
+    volumes:
+      - type: volume
+        source: "circle-postgres-volume"
+        target: "/var/lib/postgresql/data"
     deploy:
       resources:
         reservations:
@@ -28,6 +32,10 @@ services:
       - circle-network
     ports:
       - "6555:6379"
+    volumes:
+      - type: volume
+        source: "circle-redis-volume"
+        target: "/data"
     deploy:
       resources:
         reservations:
@@ -45,6 +53,10 @@ services:
     ports:
       - "7666:5672"
       - "14444:15672"
+    volumes:
+      - type: volume
+        source: "circle-rabbitmq-volume"
+        target: "/var/lib/rabbitmq"
     deploy:
       resources:
         reservations:
@@ -56,5 +68,13 @@ services:
 
 networks:
   circle-network:
-    name: circle-network-dev
+    name: circle-network
     driver: bridge
+
+volumes:
+  circle-postgres-volume:
+    name: circle-postgres-volume
+  circle-redis-volume:
+    name: circle-redis-volume
+  circle-rabbitmq-volume:
+    name: circle-rabbitmq-volume
