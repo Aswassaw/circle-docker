@@ -1,0 +1,60 @@
+version: "3.8"
+
+services:
+  circle-postgres:
+    container_name: circle-postgres
+    image: postgres:16-alpine3.18
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=aswassaw
+      - POSTGRES_DB=circle
+    networks:
+      - circle-network
+    ports:
+      - "5444:5432"
+    deploy:
+      resources:
+        reservations:
+          cpus: "0.25"
+          memory: 256M
+        limits:
+          cpus: "0.5"
+          memory: 512M
+
+  circle-redis:
+    container_name: circle-redis
+    image: redis:7.2-alpine
+    networks:
+      - circle-network
+    ports:
+      - "6555:6379"
+    deploy:
+      resources:
+        reservations:
+          cpus: "0.15"
+          memory: 128M
+        limits:
+          cpus: "0.25"
+          memory: 256M
+
+  circle-rabbitmq:
+    container_name: circle-rabbitmq
+    image: rabbitmq:3.13.0-rc.2-management-alpine
+    networks:
+      - circle-network
+    ports:
+      - "7666:5672"
+      - "14444:15672"
+    deploy:
+      resources:
+        reservations:
+          cpus: "0.15"
+          memory: 128M
+        limits:
+          cpus: "0.25"
+          memory: 256M
+
+networks:
+  circle-network:
+    name: circle-network-dev
+    driver: bridge
