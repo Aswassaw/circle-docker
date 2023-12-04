@@ -1,6 +1,6 @@
 # Tentang Repositori
 
-Repositori ini berisi config docker khusus aplikasi web Circle untuk development dan production.
+Repositori ini berisi config docker khusus aplikasi web Circle untuk development.
 
 ## Development
 
